@@ -1,5 +1,6 @@
 "use client";
 
+import { SellProduct, type State } from "@/app/actions";
 import {
   CardContent,
   CardDescription,
@@ -19,8 +20,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { TipTapEditor } from "../Editor";
 import { UploadDropzone } from "@/app/lib/uploadthing";
 import { Submitbutton } from "../SubmitButtons";
-import { SellProduct, State } from "@/app/actions";
-
 
 export function SellForm() {
   const initalState: State = { message: "", status: undefined };
@@ -136,10 +135,13 @@ export function SellForm() {
           <UploadDropzone
             onClientUploadComplete={(res) => {
               SetProductFile(res[0].url);
-              toast.success("Your Product file has been uplaoded!");
+              console.log("Uploaded file URL:", res[0].url);
+              toast.success("Your Product file has been uploaded!");
             }}
             endpoint="productFileUpload"
+            accept="application/zip"
             onUploadError={(error: Error) => {
+              console.error("Upload error:", error);
               toast.error("Something went wrong, try again");
             }}
           />
