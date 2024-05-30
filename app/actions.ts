@@ -69,5 +69,12 @@ export async function SellProduct(prevState: any, formData: FormData) {
     },
   });
 
+  const state: State = {
+    status: "success",
+    message: "Your product have been created successfully",
+  };
+
+  return state;
+
   // return redirect(`/product/${data.id}`); 
 }
