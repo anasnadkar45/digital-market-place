@@ -1,6 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
+import { FileRouter, UploadThingError, createUploadthing } from "uploadthing/server";
 
 const f = createUploadthing();
 
@@ -29,7 +28,7 @@ export const ourFileRouter = {
       return { uploadedBy: metadata.userId };
     }),
 
-  productFileUpload: f({ "application/zip": { maxFileCount: 1 } })
+  productFileUpload: f({ "blob": { maxFileCount: 1 } })
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req }) => {
       const { getUser } = getKindeServerSession();
@@ -50,8 +49,6 @@ export const ourFileRouter = {
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };
     }),
-
-    
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
