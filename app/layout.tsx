@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import { ThemeProvider } from "./components/theme-provider";
+import { Navbar } from "./components/Navbar";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,18 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        > */}
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-          <Navbar />
-          {children}
-          <Toaster richColors theme="light" closeButton />
-        {/* </ThemeProvider> */}
-
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+        <Navbar />
+        {children}
+        <Toaster richColors theme="light" closeButton />
       </body>
     </html>
   );

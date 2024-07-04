@@ -1,16 +1,18 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `emial` on the `User` table. All the data in the column will be lost.
-  - Added the required column `email` to the `User` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "CategoryTypes" AS ENUM ('template', 'uikit', 'icon');
 
--- AlterTable
-ALTER TABLE "User" DROP COLUMN "emial",
-ADD COLUMN     "email" TEXT NOT NULL;
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "profileImage" TEXT NOT NULL,
+    "connectedAccountId" TEXT NOT NULL,
+    "stripeConnectedLinked" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Product" (
@@ -27,6 +29,12 @@ CREATE TABLE "Product" (
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_connectedAccountId_key" ON "User"("connectedAccountId");
 
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

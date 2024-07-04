@@ -1,46 +1,42 @@
-"use client";
+import { Card } from "@/components/ui/card";
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { type JSONContent } from "@tiptap/react";
+import { SellForm } from "../components/form/Sellform";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import prisma from "../lib/db";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
-import { toast } from "sonner";
-import { Textarea } from "@/components/ui/textarea";
-import { UploadDropzone } from "@/app/lib/uploadthing";
-import { SellProduct, State } from "@/app/actions";
-import { SelectCategory } from "../components/SelectCategory";
-import { TipTapEditor } from "../components/Editor";
-import { Submitbutton } from "../components/SubmitButtons";
-import { Button } from "@/components/ui/button";
-import { SellForm } from "../components/form/SellForm";
+import { unstable_noStore as noStore } from "next/cache";
 
-export default function SellRoute() {
-    const initalState: State = { message: "", status: undefined };
-    const [state, formAction] = useFormState(SellProduct, initalState);
-    const [json, setJson] = useState<null | JSONContent>(null);
-    const [images, setImages] = useState<null | string[]>(null);
-    const [productFile, SetProductFile] = useState<null | string>(null);
+async function getData(userId: string) {
+  const data = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      stripeConnectedLinked: true,
+    },
+  });
 
-    useEffect(() => {
-        if (state.status === "success") {
-            toast.success(state.message);
-        } else if (state.status === "error") {
-            toast.error(state.message);
-        }
-    }, [state]);
-    return (
-        <section className="max-w-7xl mx-auto px-4 md:px-8">
-            <SellForm />
-        </section>
-    )
+  if (data?.stripeConnectedLinked === false) {
+    return redirect("/billing");
+  }
+
+  return null;
+}
+
+export default async function SellRoute() {
+  noStore();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+  const data = await getData(user.id);
+  return (
+    <section className="max-w-7xl mx-auto px-4 md:px-8 mb-14">
+      <Card>
+        <SellForm />
+      </Card>
+    </section>
+  );
 }

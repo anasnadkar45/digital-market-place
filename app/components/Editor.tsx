@@ -11,7 +11,6 @@ import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
 
 export const MenuBar = ({ editor }: { editor: Editor | null }) => {
-
   if (!editor) {
     return null;
   }
@@ -75,17 +74,22 @@ export const MenuBar = ({ editor }: { editor: Editor | null }) => {
   );
 };
 
-export function TipTapEditor({setJson,json}:{setJson:any, json:JSONContent | null}) {
+export function TipTapEditor({
+  setJson,
+  json,
+}: {
+  setJson: any;
+  json: JSONContent | null;
+}) {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: json ?? "",
+    content: json,
     editorProps: {
       attributes: {
-        class: "text-white focus:outline-none min-h-[150px]  prose prose-sm sm:prose-base",
+        class: "focus:outline-none min-h-[150px]  prose prose-sm sm:prose-base",
       },
     },
-
-    onUpdate:({editor})=>{
+    onUpdate: ({ editor }) => {
       setJson(editor.getJSON());
     },
   });
@@ -95,7 +99,7 @@ export function TipTapEditor({setJson,json}:{setJson:any, json:JSONContent | nul
       <MenuBar editor={editor} />
       <EditorContent
         editor={editor}
-        className="rounded-lg text-white border p-2 min-h-[150px] mt-2"
+        className="rounded-lg border p-2 min-h-[150px] mt-2"
       />
     </div>
   );
