@@ -8,6 +8,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserNav } from "./UserNav";
+import { ModeToggle } from "./ModeToggle";
 
 export async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -17,7 +18,7 @@ export async function Navbar() {
       <div className="md:col-span-3">
         <Link href="/">
           <h1 className="text-2xl font-semibold ">
-            Marshal<span className="text-primary">UI</span>
+            Digi<span className="text-primary">Market</span>
           </h1>
         </Link>
       </div>
@@ -25,6 +26,7 @@ export async function Navbar() {
       <NavbarLinks />
 
       <div className="flex items-center gap-x-2 ms-auto md:col-span-3">
+        <ModeToggle />
         {user ? (
           <UserNav
             email={user.email as string}
