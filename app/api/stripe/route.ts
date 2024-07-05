@@ -30,9 +30,9 @@ export async function POST(req: Request) {
       const link = session.metadata?.link;
 
       const { data, error } = await resend.emails.send({
-        from: "MarshalUI <onboarding@resend.dev>",
-        to: ["your_email"],
-        subject: "Your Product from MarshalUI",
+        from: "DigiMarket <onboarding@resend.dev>",
+        to: ["anasnadkar23@gmail.com"],
+        subject: "Your Product from DigiMarket",
         react: ProductEmail({
           link: link as string,
         }),
