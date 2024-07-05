@@ -21,7 +21,7 @@ import { TipTapEditor } from "../Editor";
 import { UploadDropzone } from "@/app/lib/uploadthing";
 import { Submitbutton } from "../SubmitButtons";
 
-export default function SellForm() {
+export function SellForm() {
   const initalState: State = { message: "", status: undefined };
   const [state, formAction] = useFormState(SellProduct, initalState);
   const [json, setJson] = useState<null | JSONContent>(null);
