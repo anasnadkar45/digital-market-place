@@ -23,7 +23,7 @@ interface iAppProps {
   email: string;
 }
 
-export function SettingsForm({ email, firstName, lastName }: iAppProps) {
+export default function SettingsForm({ email, firstName, lastName }: iAppProps) {
   const initalState: State = { message: "", status: undefined };
   const [state, formAction] = useFormState(UpdateUserSettings, initalState);
 
