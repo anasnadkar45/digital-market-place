@@ -1,5 +1,6 @@
 import ProductEmail from "@/app/components/ProductEmail";
 import { stripe } from "@/app/lib/stripe";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { headers } from "next/headers";
 import { Resend } from "resend";
@@ -8,6 +9,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const body = await req.text();
+  const {getUser}=getKindeServerSession()
+  const user = await getUser()
 
   const signature = headers().get("Stripe-Signature") as string;
 
@@ -31,7 +34,7 @@ export async function POST(req: Request) {
 
       const { data, error } = await resend.emails.send({
         from: "DigiMarket <onboarding@resend.dev>",
-        to: ["anasnadkar23@gmail.com"],
+        to: user?.email as string,
         subject: "Your Product from DigiMarket",
         react: ProductEmail({
           link: link as string,
