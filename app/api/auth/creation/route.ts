@@ -48,11 +48,11 @@ export async function GET() {
     });
   }
   
-  return NextResponse.redirect('http://localhost:3000');
+  // return NextResponse.redirect('http://localhost:3000');
 
-  // return NextResponse.redirect(
-  //   process.env.NODE_ENV === "development"
-  //     ? "http://localhost:3000"
-  //     : "https://marshal-ui-yt.vercel.app/"
-  // );
+  return NextResponse.redirect(
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://digi-market-gamma.vercel.app"
+  );
 }
