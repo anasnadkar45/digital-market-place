@@ -9,6 +9,8 @@ import {
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserNav } from "./UserNav";
 import { ModeToggle } from "./ModeToggle";
+import Logo from '../../public/logos/Sisyphus.jpg'
+import Image from "next/image";
 
 export async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -16,7 +18,8 @@ export async function Navbar() {
   return (
     <nav className="relative max-w-7xl w-full flex md:grid md:grid-cols-12 items-center px-4 md:px-8 mx-auto py-7">
       <div className="md:col-span-3">
-        <Link href="/">
+        <Link href="/" className="flex items-center gap-2">
+          <Image src={Logo} alt="" width={40} className="rounded-lg"/>
           <h1 className="text-2xl font-semibold ">
             Digi<span className="text-primary">Market</span>
           </h1>
